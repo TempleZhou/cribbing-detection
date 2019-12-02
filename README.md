@@ -3,10 +3,10 @@
 ## 目录结构
 
 ```
-.
-├── README.md
-├── datasets    # 存放训练的模型
-├── models      # 存放训练的模型
+├── README.md                
+├── datasets    # 预处理好的数据集        
+├── model       # 存放训练的模型         
+├── model_web   # 存放训练的模型      
 ├── prepare     # 准备数据
 ├── training    # 训练模型的 Python 程序
 └── webui       # 前端展示，加载训练好的模型
