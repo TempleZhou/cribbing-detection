@@ -103,8 +103,18 @@ const guiState = {
   net: null,
 };
 
-function detectCheat(nose, leftEar, rightEar) {
-  
+function calcDistance(a, b) {
+  return Math.sqrt(Math.pow(a.position.x - b.position.x, 2) + Math.pow(a.position.y - b.position.y, 2))
+}
+
+function detectCribbing(nose, leftEar, rightEar) {
+  var flag = document.getElementById("cribbing_flag");
+  if (nose.score > 0.5 && (leftEar.score < 0.5 || rightEar.score < 0.5)) {
+    console.warn('A Cribbing detected!');
+    flag.style.display = "block"
+  } else {
+    flag.style.display = "none"
+  }
 }
 
 /**
@@ -436,12 +446,8 @@ function detectPoseInRealTime(video, net) {
     // and draw the resulting skeleton and keypoints if over certain confidence
     // scores
     poses.forEach(({score, keypoints}) => {
-      if (keypoints[0].score > 0.9
-        && keypoints[3].score > 0.9
-        && keypoints[4].score > 0.9) {
-        console.info('detecting...');
-        detectCheat(keypoints[0], keypoints[3], keypoints[4]);
-      }
+      console.info('detecting...');
+      detectCribbing(keypoints[0], keypoints[3], keypoints[4]);
       if (score >= minPoseConfidence) {
         if (guiState.output.showPoints) {
           drawKeypoints(keypoints, minPartConfidence, ctx);
